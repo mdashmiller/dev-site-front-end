@@ -1,8 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import App from './App'
-
+import renderer from 'react-test-renderer'
 import Enzyme, { shallow } from 'enzyme'
+
+import App from './App'
 
 import { findByTestAttr } from '../Utils'
 
@@ -30,5 +31,14 @@ describe('App mounting and unmounting', () => {
     const div = document.createElement('div')
     ReactDOM.render(<App />, div)
     ReactDOM.unmountComponentAtNode(div)
+  })
+})
+
+describe('App snapshot', () => {
+
+  it('should have a valid snapshot', () => {
+    const component = renderer.create(<App />)
+    let tree = component.toJSON()
+    expect(tree).toMatchSnapshot()
   })
 })
