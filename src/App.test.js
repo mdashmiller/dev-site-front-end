@@ -3,11 +3,8 @@ import ReactDOM from 'react-dom'
 import App from './App'
 
 import Enzyme, { shallow } from 'enzyme'
-import Adapter from 'enzyme-adapter-react-16'
 
 import { findByTestAttr } from '../Utils'
-
-Enzyme.configure({ adapter: new Adapter() })
 
 // render component for testing
 const setUp = (props={}) => {
