@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import renderer from 'react-test-renderer'
-import { shallow, render } from 'enzyme'
+import { shallow, mount } from 'enzyme'
 
 import Header from './index'
 
@@ -12,7 +12,7 @@ const setUp = (props = {}, children) => {
   if (!children) {
     return shallow(<Header {...props} />)
   } else {
-    return render(<Header {...props} />)
+    return mount(<Header {...props} />)
   }
 }
 
@@ -20,7 +20,7 @@ describe('Header rendering', () => {
 
   let component
   let deepComponent
-  beforeAll(() => {
+  beforeEach(() => {
     component = setUp(undefined, false)
     deepComponent = setUp(undefined, true)
   })
@@ -54,40 +54,34 @@ describe('Header rendering', () => {
     const wrapper = findByTestAttr(component, 'burger')
     expect(wrapper.length).toBe(1)
   })
-  
-  // describe('mobile specific rendering', () => {
 
-  //   // change viewport to mobile size
-  //   beforeAll(() => {
-  //     global.innerWidth = 992
-  //     global.dispatchEvent(new Event('resize'))
-  //   })
+  describe('mobile specific rendering', () => {
 
-  //   it('should display the burger button', () => {
-  //     const wrapper = findByTestAttr(component, 'burger')
-  //     expect(wrapper.props.style).toHaveProperty(
-  //       'display',
-  //       ''
-  //     )
-  //   })
-  // })
+    // change viewport to mobile size
+    beforeAll(() => {
+      global.innerWidth = 992
+      global.dispatchEvent(new Event('resize'))
+    })
 
-  // describe('desktop specific rendering', () => {
+    it('should render the burger button', () => {
+      const wrapper = findByTestAttr(deepComponent, 'burger-btn')
+      expect(wrapper.length).toBe(1)
+    })
+  })
 
-  //   // change viewport to desktop size
-  //   beforeAll(() => {
-  //     global.innerWidth = 993
-  //     global.dispatchEvent(new Event('resize'))
-  //   })
+  describe('desktop specific rendering', () => {
 
-  //   it('should not display the burger button', () => {
-  //     const wrapper = findByTestAttr(component, 'burger')
-  //     expect(wrapper.props.style).toHaveProperty(
-  //       'display',
-  //       'none'
-  //     )
-  //   })
-  // })
+    // change viewport to desktop size
+    beforeAll(() => {
+      global.innerWidth = 993
+      global.dispatchEvent(new Event('resize'))
+    })
+
+    it('should not render the burger button', () => {
+      const wrapper = findByTestAttr(deepComponent, 'burger-btn')
+      expect(wrapper.length).toBe(0)
+    })
+  })
 })
 
 describe('App mounting and unmounting', () => {
