@@ -8,14 +8,14 @@ import Header from './index'
 import { findByTestAttr } from '../../../Utils'
 
 // render component for testing
-const setUp = (props = {}) => {
+const setUp = (props={}) => {
   return shallow(<Header {...props} />)
 }
 
-describe('App rendering', () => {
+describe('Header rendering', () => {
 
   let component
-  beforeAll(() => {
+  beforeEach(() => {
     component = setUp()
   })
 
@@ -43,22 +43,65 @@ describe('App rendering', () => {
     const wrapper = findByTestAttr(component, 'logo-img')
     expect(wrapper.length).toBe(1)
   })
+
+  describe('mobile specific rendering', () => {
+
+    // change viewport to mobile size
+    beforeAll(() => {
+      global.innerWidth = 992
+      global.dispatchEvent(new Event('resize'))
+    })
+
+    it('should render 1 burger component', () => {
+      const wrapper = findByTestAttr(component, 'burger')
+      expect(wrapper.length).toBe(1)
+    })
+
+    it('should not render the DesktopLinks component', () => {
+      const wrapper = findByTestAttr(component, 'desktop-links')
+      expect(wrapper.length).toBe(0)
+    })
+
+  })
+
+  describe('desktop specific rendering', () => {
+
+    // change viewport to desktop size
+    beforeAll(() => {
+      global.innerWidth = 993
+      global.dispatchEvent(new Event('resize'))
+    })
+
+    it('should render 1 DesktopLinks component', () => {
+      const wrapper = findByTestAttr(component, 'desktop-links')
+      expect(wrapper.length).toBe(1)
+    })
+
+    it('should not render the Burger component', () => {
+      const wrapper = findByTestAttr(component, 'burger')
+      expect(wrapper.length).toBe(0)
+    })
+
+  })
+
 })
 
-describe('App mounting and unmounting', () => {
+describe('Header mounting and unmounting', () => {
 
   it('should render without error', () => {
     const div = document.createElement('div')
     ReactDOM.render(<Header />, div)
     ReactDOM.unmountComponentAtNode(div)
   })
+
 })
 
-// describe('App snapshot', () => {
+// describe('Header snapshot', () => {
 
 //   it('should have a valid snapshot', () => {
 //     const component = renderer.create(<Header />)
 //     let tree = component.toJSON()
 //     expect(tree).toMatchSnapshot()
 //   })
+// 
 // })

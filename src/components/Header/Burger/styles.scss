@@ -1,0 +1,15 @@
+@import '../../../../Utils/master';
+
+.burger {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+
+  i {
+    color: $dark-pink;
+  }
+
+  &:focus {
+    background-color: transparent;
+  }
+}
