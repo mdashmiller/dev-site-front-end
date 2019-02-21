@@ -1,28 +1,22 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import renderer from 'react-test-renderer'
-import { shallow, mount } from 'enzyme'
+import { shallow } from 'enzyme'
 
 import Header from './index'
 
 import { findByTestAttr } from '../../../Utils'
 
 // render component for testing
-const setUp = (props = {}, children) => {
-  if (!children) {
-    return shallow(<Header {...props} />)
-  } else {
-    return mount(<Header {...props} />)
-  }
+const setUp = (props={}) => {
+  return shallow(<Header {...props} />)
 }
 
 describe('Header rendering', () => {
 
   let component
-  let deepComponent
   beforeEach(() => {
-    component = setUp(undefined, false)
-    deepComponent = setUp(undefined, true)
+    component = setUp()
   })
 
   it('should render 1 header', () => {
@@ -50,11 +44,6 @@ describe('Header rendering', () => {
     expect(wrapper.length).toBe(1)
   })
 
-  it('should render 1 burger component', () => {
-    const wrapper = findByTestAttr(component, 'burger')
-    expect(wrapper.length).toBe(1)
-  })
-
   describe('mobile specific rendering', () => {
 
     // change viewport to mobile size
@@ -63,10 +52,16 @@ describe('Header rendering', () => {
       global.dispatchEvent(new Event('resize'))
     })
 
-    it('should render the burger button', () => {
-      const wrapper = findByTestAttr(deepComponent, 'burger-btn')
+    it('should render 1 burger component', () => {
+      const wrapper = findByTestAttr(component, 'burger')
       expect(wrapper.length).toBe(1)
     })
+
+    it('should not render the DesktopLinks component', () => {
+      const wrapper = findByTestAttr(component, 'desktop-links')
+      expect(wrapper.length).toBe(0)
+    })
+
   })
 
   describe('desktop specific rendering', () => {
@@ -77,27 +72,36 @@ describe('Header rendering', () => {
       global.dispatchEvent(new Event('resize'))
     })
 
-    it('should not render the burger button', () => {
-      const wrapper = findByTestAttr(deepComponent, 'burger-btn')
+    it('should render 1 DesktopLinks component', () => {
+      const wrapper = findByTestAttr(component, 'desktop-links')
+      expect(wrapper.length).toBe(1)
+    })
+
+    it('should not render the Burger component', () => {
+      const wrapper = findByTestAttr(component, 'burger')
       expect(wrapper.length).toBe(0)
     })
+
   })
+
 })
 
-describe('App mounting and unmounting', () => {
+describe('Header mounting and unmounting', () => {
 
   it('should render without error', () => {
     const div = document.createElement('div')
     ReactDOM.render(<Header />, div)
     ReactDOM.unmountComponentAtNode(div)
   })
+
 })
 
-// describe('App snapshot', () => {
+// describe('Header snapshot', () => {
 
 //   it('should have a valid snapshot', () => {
 //     const component = renderer.create(<Header />)
 //     let tree = component.toJSON()
 //     expect(tree).toMatchSnapshot()
 //   })
+// 
 // })

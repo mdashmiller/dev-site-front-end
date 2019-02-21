@@ -1,6 +1,5 @@
-$dark-grey: #212121;
-$darker-grey: #1a1a1a;
-$dark-pink: #ad1457;
+@import '../../../Utils/master';
+
 $banner-mobile-sm: '../../assets/images/punchcard_banner_mobile_400.jpg';
 $banner-mobile-md: '../../assets/images/punchcard_banner_mobile_520.jpg';
 $banner-mobile-lg: '../../assets/images/punchcard_banner_mobile_540.jpg';
@@ -73,34 +72,11 @@ nav {
 		}
 	}
 
-	ul a {
-		font-size: 1.1rem;
-		font-weight: bold;
-
-		&:hover {
-			background-color: $darker-grey;
-		}
-	}
-
 	/* have navbar fixed to top of window
 	for smaller screens*/
 	@media screen and (max-width: 992px) {
 		position: fixed;
 		top: 0;
 		z-index: 2;
-	}
-}
-
-.burger {
-	background: transparent;
-	border: none;
-	cursor: pointer;
-
-	i {
-		color: $dark-pink;
-	}
-
-	&:focus {
-		background-color: transparent;
 	}
 }
