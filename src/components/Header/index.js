@@ -3,6 +3,7 @@ import './styles.scss'
 import logo from '../../assets/images/logo.jpg'
 import Burger from './Burger/index'
 import DesktopLinks from './DesktopLinks/index'
+import MobileNav from './MobileNav/index'
 
 class Header extends Component {
 
@@ -45,6 +46,7 @@ class Header extends Component {
             { this.responsive(windowWidth) }
           </div>
         </nav>
+        <MobileNav data-test="mobile-nav" />
       </header>
     )
   }

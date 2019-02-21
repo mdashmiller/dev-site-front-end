@@ -44,6 +44,11 @@ describe('Header rendering', () => {
     expect(wrapper.length).toBe(1)
   })
 
+  it('should render 1 MobileNav component', () => {
+    const wrapper = findByTestAttr(component, 'mobile-nav')
+    expect(wrapper.length).toBe(1)
+  })
+
   describe('mobile specific rendering', () => {
 
     // change viewport to mobile size
