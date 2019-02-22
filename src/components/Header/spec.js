@@ -44,11 +44,6 @@ describe('Header rendering', () => {
     expect(wrapper.length).toBe(1)
   })
 
-  it('should render 1 MobileNav component', () => {
-    const wrapper = findByTestAttr(component, 'mobile-nav')
-    expect(wrapper.length).toBe(1)
-  })
-
   describe('mobile specific rendering', () => {
 
     // change viewport to mobile size
@@ -57,13 +52,13 @@ describe('Header rendering', () => {
       global.dispatchEvent(new Event('resize'))
     })
 
-    it('should render 1 burger component', () => {
-      const wrapper = findByTestAttr(component, 'burger')
+    it('should render 1 MobileNav component', () => {
+      const wrapper = findByTestAttr(component, 'mobile-nav')
       expect(wrapper.length).toBe(1)
     })
 
-    it('should not render the DesktopLinks component', () => {
-      const wrapper = findByTestAttr(component, 'desktop-links')
+    it('should not render the DesktopNav component', () => {
+      const wrapper = findByTestAttr(component, 'desktop-nav')
       expect(wrapper.length).toBe(0)
     })
 
@@ -77,13 +72,13 @@ describe('Header rendering', () => {
       global.dispatchEvent(new Event('resize'))
     })
 
-    it('should render 1 DesktopLinks component', () => {
-      const wrapper = findByTestAttr(component, 'desktop-links')
+    it('should render 1 DesktopNav component', () => {
+      const wrapper = findByTestAttr(component, 'desktop-nav')
       expect(wrapper.length).toBe(1)
     })
 
-    it('should not render the Burger component', () => {
-      const wrapper = findByTestAttr(component, 'burger')
+    it('should not render the MobileNav component', () => {
+      const wrapper = findByTestAttr(component, 'mobile-nav')
       expect(wrapper.length).toBe(0)
     })
 

@@ -19,6 +19,16 @@ describe('MobileNav rendering', () => {
     component = setUp()
   })
 
+  it('should render 1 burger button', () => {
+    const wrapper = findByTestAttr(component, 'burger-btn')
+    expect(wrapper.length).toBe(1)
+  })
+
+  it('should render 1 menu icon', () => {
+    const wrapper = findByTestAttr(component, 'menu-icon')
+    expect(wrapper.length).toBe(1)
+  })
+
   it('should render 1 menu ul', () => {
     const wrapper = findByTestAttr(component, 'menu')
     expect(wrapper.length).toBe(1)

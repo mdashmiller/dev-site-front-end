@@ -72,8 +72,8 @@ nav {
 		}
 	}
 
-	/* have navbar fixed to top of window
-	for smaller screens*/
+	// have navbar fixed to top of
+	// window for smaller screens
 	@media screen and (max-width: 992px) {
 		position: fixed;
 		top: 0;

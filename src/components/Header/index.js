@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import './styles.scss'
 import logo from '../../assets/images/logo.jpg'
-import Burger from './Burger/index'
-import DesktopLinks from './DesktopLinks/index'
+import DesktopNav from './DesktopNav/index'
 import MobileNav from './MobileNav/index'
 
 class Header extends Component {
@@ -17,14 +16,21 @@ class Header extends Component {
     })
   }
 
-  responsive = (width) => {
-    // return a burger button or a set
-    // of desktop links dependent
-    // upon viewport width
-    if (width < 993) {
-      return <Burger data-test="burger" />
+  renderForDesktop = (width) => {
+    // return desktop links for larger viewports
+    if (width > 992) {
+      return <DesktopNav data-test="desktop-nav" />
     } else {
-      return <DesktopLinks data-test="desktop-links" />
+      return null
+    }
+  }
+
+  renderForMobile = (width) => {
+    // return a mobile menu for smaller viewports
+    if (width < 993) {
+      return <MobileNav data-test="mobile-nav" />
+    } else {
+      return null
     }
   }
 
@@ -35,18 +41,18 @@ class Header extends Component {
 
   render() {
     const { windowWidth } = this.state
-
+    
     return (
       <header data-test="header" className="scrollspy">
         <nav data-test="nav">
           <div data-test="nav-wrapper" className="nav-wrapper container">
             <a href="#top" data-test="brand-logo" className="brand-logo">
-              <img src={logo} data-test="logo-img" alt="Matt Miller's logo" />
+              <img src={logo} data-test="logo-img" alt="Matt Miller Web Developer" />
             </a>
-            { this.responsive(windowWidth) }
+            { this.renderForDesktop(windowWidth) }
           </div>
         </nav>
-        <MobileNav data-test="mobile-nav" />
+        { this.renderForMobile(windowWidth) }
       </header>
     )
   }

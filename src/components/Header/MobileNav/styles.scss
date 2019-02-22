@@ -56,3 +56,21 @@
     display: none !important;
   }
 }
+
+.burger {
+  position: fixed;
+  top: 2.5vh;
+  left: 6vw;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  z-index: 2;
+
+  i {
+    color: $dark-pink;
+  }
+
+  &:focus {
+    background-color: transparent;
+  }
+}
