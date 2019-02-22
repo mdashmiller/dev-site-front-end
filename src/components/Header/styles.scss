@@ -40,8 +40,8 @@ header {
 	}
 
 	@media screen and (min-width: 937px) {
-		/* header bumps up in size temporarily for medium tablets
-		to line-up with the mobile-style navbar */
+		// header bumps up in size temporarily for medium tablets
+		// to line-up with the mobile-style navbar
 		@include background-size($banner-tablet-md-bigger, 418px);
 	}
 
@@ -72,8 +72,8 @@ nav {
 		}
 	}
 
-	/* have navbar fixed to top of window
-	for smaller screens*/
+	// have navbar fixed to top of
+	// window for smaller screens
 	@media screen and (max-width: 992px) {
 		position: fixed;
 		top: 0;

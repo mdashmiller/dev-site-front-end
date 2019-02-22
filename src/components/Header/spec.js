@@ -52,13 +52,13 @@ describe('Header rendering', () => {
       global.dispatchEvent(new Event('resize'))
     })
 
-    it('should render 1 burger component', () => {
-      const wrapper = findByTestAttr(component, 'burger')
+    it('should render 1 MobileNav component', () => {
+      const wrapper = findByTestAttr(component, 'mobile-nav')
       expect(wrapper.length).toBe(1)
     })
 
-    it('should not render the DesktopLinks component', () => {
-      const wrapper = findByTestAttr(component, 'desktop-links')
+    it('should not render the DesktopNav component', () => {
+      const wrapper = findByTestAttr(component, 'desktop-nav')
       expect(wrapper.length).toBe(0)
     })
 
@@ -72,19 +72,67 @@ describe('Header rendering', () => {
       global.dispatchEvent(new Event('resize'))
     })
 
-    it('should render 1 DesktopLinks component', () => {
-      const wrapper = findByTestAttr(component, 'desktop-links')
+    it('should render 1 DesktopNav component', () => {
+      const wrapper = findByTestAttr(component, 'desktop-nav')
       expect(wrapper.length).toBe(1)
     })
 
-    it('should not render the Burger component', () => {
-      const wrapper = findByTestAttr(component, 'burger')
+    it('should not render the MobileNav component', () => {
+      const wrapper = findByTestAttr(component, 'mobile-nav')
       expect(wrapper.length).toBe(0)
     })
 
   })
 
 })
+
+// describe('setWindowWidth()', () => {
+
+//   describe('spying on setWindowWidth()', () => {
+
+//   })
+
+//   describe('directly invoking setWindowWidth()', () => {
+
+//   })
+
+// })
+
+// describe('renderForDesktop()', () => {
+
+//   describe('spying on renderForDesktop()', () => {
+
+//   })
+
+//   describe('directly invoking renderForDesktop()', () => {
+
+//   })
+
+// })
+
+// describe('renderForMobile()', () => {
+
+//   describe('spying on renderForMobile()', () => {
+
+//   })
+
+//   describe('directly invoking renderForMobile()', () => {
+
+//   })
+
+// })
+
+// describe('componentDidMount()', () => {
+
+//   describe('spying on componentDidMount()', () => {
+
+//   })
+
+//   describe('directly invoking componentDidMount()', () => {
+
+//   })
+
+// })
 
 describe('Header mounting and unmounting', () => {
 
@@ -96,12 +144,12 @@ describe('Header mounting and unmounting', () => {
 
 })
 
-// describe('Header snapshot', () => {
+describe('Header snapshot', () => {
 
-//   it('should have a valid snapshot', () => {
-//     const component = renderer.create(<Header />)
-//     let tree = component.toJSON()
-//     expect(tree).toMatchSnapshot()
-//   })
-// 
-// })
+  it('should have a valid snapshot', () => {
+    const component = renderer.create(<Header />)
+    let tree = component.toJSON()
+    expect(tree).toMatchSnapshot()
+  })
+
+})

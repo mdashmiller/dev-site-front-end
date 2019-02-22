@@ -3,16 +3,16 @@ import ReactDOM from 'react-dom'
 import renderer from 'react-test-renderer'
 import { shallow } from 'enzyme'
 
-import DesktopLinks from './index'
+import DesktopNav from './index'
 
 import { findByTestAttr } from '../../../../Utils'
 
 // render component for testing
 const setUp = (props = {}) => {
-  return shallow(<DesktopLinks {...props} />)
+  return shallow(<DesktopNav {...props} />)
 }
 
-describe('DesktopLinks rendering', () => {
+describe('DesktopNav rendering', () => {
 
   let component
   beforeAll(() => {
@@ -61,11 +61,11 @@ describe('DesktopLinks rendering', () => {
 
 })
 
-describe('Burger mounting and unmounting', () => {
+describe('DesktopNav mounting and unmounting', () => {
 
   it('should render without error', () => {
     const div = document.createElement('div')
-    ReactDOM.render(<DesktopLinks />, div)
+    ReactDOM.render(<DesktopNav />, div)
     ReactDOM.unmountComponentAtNode(div)
   })
 

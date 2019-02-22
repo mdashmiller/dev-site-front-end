@@ -1,7 +1,7 @@
 import React from 'react'
 import './styles.scss'
 
-const DesktopLinks = () => {
+const DesktopNav = () => {
   return (
     <ul data-test="links" className="right">
       <li><a data-test="about" href="#about">ABOUT</a></li>
@@ -29,4 +29,4 @@ const DesktopLinks = () => {
   )
 }
 
-export default DesktopLinks
+export default DesktopNav
