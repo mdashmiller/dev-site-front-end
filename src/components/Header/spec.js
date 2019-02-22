@@ -4,6 +4,8 @@ import renderer from 'react-test-renderer'
 import { shallow } from 'enzyme'
 
 import Header from './index'
+import DesktopNav from './DesktopNav/index'
+import MobileNav from './MobileNav/index'
 
 import { findByTestAttr } from '../../../Utils'
 
@@ -86,53 +88,170 @@ describe('Header rendering', () => {
 
 })
 
-// describe('setWindowWidth()', () => {
+describe('setWindowWidth()', () => {
 
-//   describe('spying on setWindowWidth()', () => {
+  let component
+  let instance
+  beforeEach(() => {
+    component = setUp()
+    instance = component.instance()
+  })
 
-//   })
+  describe('spying on setWindowWidth()', () => {
+    
+    it('should be called when the browser window is resized', () => {
+      jest.spyOn(instance, 'setWindowWidth')
 
-//   describe('directly invoking setWindowWidth()', () => {
+      // resize browser window
+      global.innerWidth = 1000
+      global.dispatchEvent(new Event('resize'))
 
-//   })
+      setTimeout(() => {
+        expect(instance.setWindowWidth).toHaveBeenCalledTimes(1)
+      })
+    })
 
-// })
+  })
 
-// describe('renderForDesktop()', () => {
+  describe('directly invoking setWindowWidth()', () => {
 
-//   describe('spying on renderForDesktop()', () => {
+    it('should set state.windowWidth with value of window.innerWidth', () => {
+      // resize browser window
+      global.innerWidth = 800
+      global.dispatchEvent(new Event('resize'))
 
-//   })
+      expect(component.state('windowWidth')).toBe(800)
+    })
 
-//   describe('directly invoking renderForDesktop()', () => {
+  })
 
-//   })
+})
 
-// })
+describe('renderForDesktop()', () => {
 
-// describe('renderForMobile()', () => {
+  let component
+  let instance
+  beforeEach(() => {
+    component = setUp()
+    instance = component.instance()
+    // spy on the function and force a render
+    jest.spyOn(instance, 'renderForDesktop')
+    component.update()
+  })
 
-//   describe('spying on renderForMobile()', () => {
+  describe('spying on renderForDesktop()', () => {
 
-//   })
+    it('should be called on render', () => {
+      setTimeout(() => {
+        expect(instance.renderForDesktop).toHaveBeenCalled()
+      })
+    })
 
-//   describe('directly invoking renderForMobile()', () => {
+  })
 
-//   })
+  describe('directly invoking renderForDesktop()', () => {
 
-// })
+    describe('renderForDesktop() on desktop screens', () => {
 
-// describe('componentDidMount()', () => {
+      it('should return 1 DesktopNav component', () => {
+        setTimeout(() => {
+          expect(instance.renderForDesktop).toHaveReturnedWith(DesktopNav)
+        })
+      })
 
-//   describe('spying on componentDidMount()', () => {
+    })
 
-//   })
+    describe('renderForDesktop() on mobile screens', () => {
 
-//   describe('directly invoking componentDidMount()', () => {
+      it('should return null', () => {
+        // resize browser window
+        global.innerWidth = 800
+        global.dispatchEvent(new Event('resize'))
+        component.update()
 
-//   })
+        setTimeout(() => {
+          expect(instance.renderForDesktop).toHaveReturnedWith(null)
+        })
+      })
 
-// })
+    })
+
+  })
+
+})
+
+describe('renderForMobile()', () => {
+
+  let component
+  let instance
+  beforeEach(() => {
+    component = setUp()
+    instance = component.instance()
+    // spy on the function and force a render
+    jest.spyOn(instance, 'renderForMobile')
+    component.update()
+  })
+
+  describe('spying on renderForMobile()', () => {
+
+    it('should be called on render', () => {
+      setTimeout(() => {
+        expect(instance.renderForMobile).toHaveBeenCalled()
+      })
+    })
+
+  })
+
+  describe('directly invoking renderForMobile()', () => {
+
+    describe('renderForMobile() on desktop screens', () => {
+
+      it('should return null', () => {
+        setTimeout(() => {
+          expect(instance.renderForMobile).toHaveReturnedWith(null)
+        })
+      })
+
+    })
+
+    describe('renderForMobile() on mobile screens', () => {
+
+      it('should return with 1 MobileNav component', () => {
+        // resize browser window
+        global.innerWidth = 800
+        global.dispatchEvent(new Event('resize'))
+        component.update()
+
+        setTimeout(() => {
+          expect(instance.renderForMobile).toHaveReturnedWith(MobileNav)
+        })
+      })
+
+    })
+
+  })
+
+})
+
+describe('componentDidMount()', () => {
+
+  describe('directly invoking componentDidMount()', () => {
+
+    let component
+    beforeEach(() => {
+      component = setUp()
+      component.update()
+    })
+
+    it('should attach the "resize" event listener to the window', () => {
+      setTimeout(() => {
+        expect(global).toHaveProperty('resize')
+      })
+    })
+
+  })
+
+})
 
 describe('Header mounting and unmounting', () => {
 
@@ -144,12 +263,12 @@ describe('Header mounting and unmounting', () => {
 
 })
 
-describe('Header snapshot', () => {
+// describe('Header snapshot', () => {
 
-  it('should have a valid snapshot', () => {
-    const component = renderer.create(<Header />)
-    let tree = component.toJSON()
-    expect(tree).toMatchSnapshot()
-  })
+//   it('should have a valid snapshot', () => {
+//     const component = renderer.create(<Header />)
+//     let tree = component.toJSON()
+//     expect(tree).toMatchSnapshot()
+//   })
 
-})
+// })
