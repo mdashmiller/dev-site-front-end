@@ -86,6 +86,54 @@ describe('Header rendering', () => {
 
 })
 
+// describe('setWindowWidth()', () => {
+
+//   describe('spying on setWindowWidth()', () => {
+
+//   })
+
+//   describe('directly invoking setWindowWidth()', () => {
+
+//   })
+
+// })
+
+// describe('renderForDesktop()', () => {
+
+//   describe('spying on renderForDesktop()', () => {
+
+//   })
+
+//   describe('directly invoking renderForDesktop()', () => {
+
+//   })
+
+// })
+
+// describe('renderForMobile()', () => {
+
+//   describe('spying on renderForMobile()', () => {
+
+//   })
+
+//   describe('directly invoking renderForMobile()', () => {
+
+//   })
+
+// })
+
+// describe('componentDidMount()', () => {
+
+//   describe('spying on componentDidMount()', () => {
+
+//   })
+
+//   describe('directly invoking componentDidMount()', () => {
+
+//   })
+
+// })
+
 describe('Header mounting and unmounting', () => {
 
   it('should render without error', () => {
@@ -96,12 +144,12 @@ describe('Header mounting and unmounting', () => {
 
 })
 
-// describe('Header snapshot', () => {
+describe('Header snapshot', () => {
 
-//   it('should have a valid snapshot', () => {
-//     const component = renderer.create(<Header />)
-//     let tree = component.toJSON()
-//     expect(tree).toMatchSnapshot()
-//   })
-// 
-// })
+  it('should have a valid snapshot', () => {
+    const component = renderer.create(<Header />)
+    let tree = component.toJSON()
+    expect(tree).toMatchSnapshot()
+  })
+
+})

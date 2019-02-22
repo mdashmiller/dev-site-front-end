@@ -1,0 +1,84 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Header snapshot should have a valid snapshot 1`] = `
+<header
+  className="scrollspy"
+  data-test="header"
+>
+  <nav
+    data-test="nav"
+  >
+    <div
+      className="nav-wrapper container"
+      data-test="nav-wrapper"
+    >
+      <a
+        className="brand-logo"
+        data-test="brand-logo"
+        href="#top"
+      >
+        <img
+          alt="Matt Miller Web Developer"
+          data-test="logo-img"
+          src="logo.jpg"
+        />
+      </a>
+      <ul
+        className="right"
+        data-test="links"
+      >
+        <li>
+          <a
+            data-test="about"
+            href="#about"
+          >
+            ABOUT
+          </a>
+        </li>
+        <li>
+          <a
+            data-test="portfolio"
+            href="#portfolio"
+          >
+            PORTFOLIO
+          </a>
+        </li>
+        <li>
+          <a
+            data-test="contact"
+            href="#contact"
+          >
+            CONTACT
+          </a>
+        </li>
+        <li>
+          <a
+            className="btn-floating btn-small tooltipped"
+            data-test="linkedin"
+            data-tooltip="Linked In"
+            href="linkedin.com"
+          >
+            <i
+              className="fab fa-linkedin"
+              data-test="linkedin-icon"
+            />
+          </a>
+        </li>
+        <li>
+          <a
+            className="btn-floating btn-small tooltipped"
+            data-test="github"
+            data-tooltip="GitHub"
+            href="gitub.com"
+          >
+            <i
+              className="fab fa-github"
+              data-test="github-icon"
+            />
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>
+`;

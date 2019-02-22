@@ -1,21 +1,45 @@
-import React from 'react'
+import React, { Component } from 'react'
 import './styles.scss'
 
-const MobileNav = () => {
-  return (
-    <div>
-      <button data-test="burger-btn" className="burger">
-        <i data-test="menu-icon" className="material-icons">menu</i>
-      </button>
-      <div className="mobile-menu">
-        <ul data-test="menu">
-          <li><a data-test="about" href="#about">About</a></li>
-          <li><a data-test="portfolio" href="#portfolio">Portfolio</a></li>
-          <li><a data-test="contact" href="#contact">Contact</a></li>
-        </ul>
+class MobileNav extends Component {
+
+  state = {
+    mobileNavOpen: false
+  }
+
+  handleClick = () => {
+    const { mobileNavOpen } = this.state
+    this.setState({
+      mobileNavOpen: !mobileNavOpen
+    })
+  }
+
+  render() {
+    const { mobileNavOpen } = this.state
+    const toggle = mobileNavOpen ? 'visible' : null
+
+    return (
+      <div>
+        <button
+          data-test="burger-btn"
+          className="burger"
+          onClick={() => this.handleClick()}
+        >
+          <i data-test="menu-icon" className="material-icons">menu</i>
+        </button>
+        <div
+          data-test="menu"
+          className={`mobile-menu ${toggle}`}
+        >
+          <ul>
+            <li><a data-test="about" href="#about">About</a></li>
+            <li><a data-test="portfolio" href="#portfolio">Portfolio</a></li>
+            <li><a data-test="contact" href="#contact">Contact</a></li>
+          </ul>
+        </div>
       </div>
-    </div>
-  )
+    )
+  }
 }
 
 export default MobileNav
