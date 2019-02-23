@@ -23,6 +23,12 @@ describe('App rendering', () => {
     const wrapper = findByTestAttr(component, 'header')
     expect(wrapper.length).toBe(1)
   })
+
+  it('should render 1 Main component', () => {
+    const wrapper = findByTestAttr(component, 'main')
+    expect(wrapper.length).toBe(1)
+  })
+
 })
 
 describe('App mounting and unmounting', () => {
@@ -32,6 +38,7 @@ describe('App mounting and unmounting', () => {
     ReactDOM.render(<App />, div)
     ReactDOM.unmountComponentAtNode(div)
   })
+
 })
 
 // describe('App snapshot', () => {
@@ -41,4 +48,5 @@ describe('App mounting and unmounting', () => {
 //     let tree = component.toJSON()
 //     expect(tree).toMatchSnapshot()
 //   })
+
 // })
