@@ -1,4 +1,5 @@
 import React from 'react'
+import './styles.scss'
 
 import About from './About/index'
 import Portfolio from './Portfolio/index'

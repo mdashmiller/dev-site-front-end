@@ -45,7 +45,7 @@ const About = () => {
           <img
             data-test="about-img"
             src={ladyCardPuncher}
-            alt="a mid-century picture of a woman using a card-punch machine"
+            alt="a woman using a mid-century card-punch machine"
             className="responsive-img"
           />
         </div>
