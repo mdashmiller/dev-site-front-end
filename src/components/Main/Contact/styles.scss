@@ -41,6 +41,6 @@ textarea.materialize-textarea:focus:not([readonly]) {
 // change chrome autofill background color
 input:-webkit-autofill,
 textarea:-webkit-autofill {
-    -webkit-box-shadow: 0 0 0px 30px #f0e3e9 inset !important;
+    box-shadow: 0 0 0px 30px #f0e3e9 inset !important;
     transition: 0s !important;
 }
