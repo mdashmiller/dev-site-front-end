@@ -29,6 +29,11 @@ describe('App rendering', () => {
     expect(wrapper.length).toBe(1)
   })
 
+  it('should render 1 Footer component', () => {
+    const wrapper = findByTestAttr(component, 'footer')
+    expect(wrapper.length).toBe(1)
+  })
+
 })
 
 describe('App mounting and unmounting', () => {
