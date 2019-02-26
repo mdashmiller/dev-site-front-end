@@ -2,4 +2,27 @@
 
 .page-footer {
   background-color: $dark-grey;
+
+  li {
+    margin-bottom: 8px;
+  }
+
+  a {
+    color: $lightest-grey;
+  }
+
+  p {
+
+    a {
+      color: $lighter-pink;
+    }
+  }
+
+  .footer-copyright {
+    background-color: black;
+
+    div {
+      color: $med-grey;
+    }
+  }
 }
