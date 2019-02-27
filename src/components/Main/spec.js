@@ -34,6 +34,16 @@ describe('Main rendering', () => {
     expect(wrapper.length).toBe(1)
   })
 
+  it('should render 1 first-parallax component', () => {
+    const wrapper = findByTestAttr(component, 'parallax-1')
+    expect(wrapper.length).toBe(1)
+  })
+
+  it('should render 1 second-parallax component', () => {
+    const wrapper = findByTestAttr(component, 'parallax-2')
+    expect(wrapper.length).toBe(1)
+  })
+
 })
 
 describe('Main mounting and unmounting', () => {
