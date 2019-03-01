@@ -16,15 +16,26 @@ class MiniNav extends Component {
   }
 
   setScrollPosition = () => {
+    const position = window.scrollY
+
+    if (!position) this.toggleMenu(true)
+
     this.setState({
-      scrollPosition: window.scrollY
+      scrollPosition: position
     })
   }
 
-  handleMouseEnter = () => {
-    this.setState({
-      menuOpen: true
-    })
+  toggleMenu = (top = false) => {
+    if (top) {
+      this.setState({
+        menuOpen: false
+      })
+    } else {
+      const { menuOpen } = this.state
+      this.setState({
+        menuOpen: !menuOpen
+      })
+    }
   }
 
   componentDidMount() {
@@ -49,18 +60,54 @@ class MiniNav extends Component {
             <div 
               data-test="menu-btn"
               className="mini-nav-btn"
-              onMouseEnter={() => this.handleMouseEnter()}
+              onMouseEnter={() => this.toggleMenu()}
             >
               MENU
             </div>
             {
               menuOpen &&
-                <div data-test="menu" className="mini-nav-menu">
+                <div
+                  data-test="menu"
+                  className="mini-nav-menu"
+                  onMouseLeave={() => this.toggleMenu()}
+                >
                   <ul>
-                    <li><a data-test="link" href="#top">Top</a></li>
-                    <li><a data-test="link" href="#about">About</a></li>
-                    <li><a data-test="link" href="#portfolio">Portfolio</a></li>
-                    <li><a data-test="link" href="#contact">Contact</a></li>
+                    <li>
+                      <a
+                        data-test="link"
+                        href="#top"
+                        onClick={() => this.toggleMenu()}
+                      >
+                        Top
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        data-test="link"
+                        href="#about"
+                        onClick={() => this.toggleMenu()}
+                      >
+                        About
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        data-test="link"
+                        href="#portfolio"
+                        onClick={() => this.toggleMenu()}
+                      >
+                        Portfolio
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        data-test="link"
+                        href="#contact"
+                        onClick={() => this.toggleMenu()}
+                      >
+                        Contact
+                      </a>
+                    </li>
                     <li data-test="menu-title">Menu</li>
                   </ul>
                 </div>

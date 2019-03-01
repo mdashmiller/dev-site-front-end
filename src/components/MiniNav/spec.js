@@ -193,14 +193,17 @@ describe('setWindowWidth()', () => {
       
 //     })
 
+//     it('should call toggleMenu() with true when scrollY is 0', () => {
+
+//     })
+
 //   })
 
 // })
 
-describe('handleMouseEnter()', () => {
+describe('toggleMenu()', () => {
 
-  let component
-  let instance
+  let component, instance
   beforeEach(() => {
     component = setUp()
 
@@ -208,27 +211,79 @@ describe('handleMouseEnter()', () => {
     component.setState({ scrollPosition: 100 })
 
     instance = component.instance()
+    jest.spyOn(instance, 'toggleMenu')
   })
 
-  describe('spying on handleMouseEnter()', () => {
+  const openMiniNav = () => {
+    const button = findByTestAttr(component, 'menu-btn')
+    button.simulate('mouseEnter')
+  }
+
+  describe('spying on toggleMenu()', () => {
 
     it('should be called when cursor enters mini-nav div', () => {
-      jest.spyOn(instance, 'handleMouseEnter')
-      const wrapper = findByTestAttr(component, 'menu-btn')
-
-      wrapper.simulate('mouseEnter')
-
-      expect(instance.handleMouseEnter).toHaveBeenCalledTimes(1)
+      openMiniNav()
+      expect(instance.toggleMenu).toHaveBeenCalledTimes(1)
     })
+
+    it('should be called when cursor leaves mini-nav menu', () => {
+      openMiniNav()
+      const wrapper = findByTestAttr(component, 'menu')
+
+      wrapper.simulate('mouseLeave')
+
+      expect(instance.toggleMenu).toHaveBeenCalledTimes(2)
+    })
+
+    it('should be called when a link is clicked', () => {
+      openMiniNav()
+      const wrapper = findByTestAttr(component, 'link')
+      const numOfLinks = wrapper.length
+    
+      for (let i = 0; i < numOfLinks; i++) {
+        wrapper.at(i).simulate('click')
+        if (i < numOfLinks - 1) openMiniNav()
+      }
+
+      expect(instance.toggleMenu).toHaveBeenCalledTimes(numOfLinks * 2)
+    })
+
+    // it('should be called when scrollY is 0', () => {
+    //   // simulate scroll event where window.scrollY = 0
+
+    //   expect(instance.toggleMenu).toHaveBeenCalledTimes(1)
+    //   expect(instance.toggleMenu).toHaveBeenCalledWith(true)
+    // })
 
   })
 
-  describe('directly invoking handleMouseEnter()', () => {
+  describe('directly invoking toggleMenu()', () => {
 
-    it('should set openMenu in state', () => {
-      instance.handleMouseEnter()
+    describe('top is false', () => {
 
-      expect(instance.state.menuOpen).toBe(true)
+      it('should toggle menuOpen in state', () => {
+        instance.toggleMenu()
+        expect(instance.state.menuOpen).toBe(true)
+
+        instance.toggleMenu()
+        expect(instance.state.menuOpen).toBe(false)
+      })
+
+    })
+
+    describe('top is true', () => {
+
+      it('should set menuOpen to false', () => {
+        openMiniNav()
+        instance.toggleMenu(true)
+
+        expect(instance.state.menuOpen).toBe(false)
+
+        instance.toggleMenu(true)
+
+        expect(instance.state.menuOpen).toBe(false)
+      })
+
     })
 
   })
