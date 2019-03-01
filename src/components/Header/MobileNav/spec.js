@@ -53,17 +53,17 @@ describe('MobileNav rendering', () => {
 
 describe('handleClick', () => {
   
-  let component
-  let wrapper
+  let component, instance, wrapper
   beforeEach(() => {
     component = setUp()
+    instance = component.instance()
     wrapper = findByTestAttr(component, 'burger-btn')
   })
 
   describe('spying on handleClick', () => {
 
     it('should be called when burger button is clicked', () => {
-      const instance = component.instance()
+      instance = component.instance()
 
       jest.spyOn(instance, 'handleClick')
       wrapper.simulate('click')
@@ -76,15 +76,15 @@ describe('handleClick', () => {
   describe('directly invoking handleClick', () => {
 
     it('should toggle state.mobileNavOpen', () => {
-      wrapper.simulate('click')
+      instance.handleClick()
       expect(component.state('mobileNavOpen')).toBe(true)
 
-      wrapper.simulate('click')
+      instance.handleClick()
       expect(component.state('mobileNavOpen')).toBe(false)
     })
 
     it('should add the class "visible" to the mobile-menu ul', () => {
-      wrapper.simulate('click')
+      instance.handleClick()
       const menu = findByTestAttr(component, 'menu')
       
       expect(menu.hasClass('visible')).toBe(true)
