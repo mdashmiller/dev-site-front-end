@@ -16,27 +16,9 @@ class Header extends Component {
     })
   }
 
-  renderForDesktop = (width) => {
-    // return desktop links for larger viewports
-    if (width > 992) {
-      return <DesktopNav data-test="desktop-nav" />
-    } else {
-      return null
-    }
-  }
-
-  renderForMobile = (width) => {
-    // return a mobile menu for smaller viewports
-    if (width < 993) {
-      return <MobileNav data-test="mobile-nav" />
-    } else {
-      return null
-    }
-  }
-
   componentDidMount() {
     // track changes in browser width
-    window.addEventListener('resize', this.setWindowWidth)
+    window.addEventListener('resize', () => this.setWindowWidth())
   }
 
   render() {
@@ -49,10 +31,10 @@ class Header extends Component {
             <a href="#top" data-test="brand-logo" className="brand-logo">
               <img src={logo} data-test="logo-img" alt="Matt Miller Web Developer" />
             </a>
-            { this.renderForDesktop(windowWidth) }
+            { windowWidth > 992 && <DesktopNav data-test="desktop-nav" /> }
           </div>
         </nav>
-        { this.renderForMobile(windowWidth) }
+        { windowWidth < 993 && <MobileNav data-test="mobile-nav" /> }
       </header>
     )
   }

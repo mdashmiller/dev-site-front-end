@@ -106,9 +106,7 @@ describe('setWindowWidth()', () => {
       global.innerWidth = 1000
       global.dispatchEvent(new Event('resize'))
 
-      setTimeout(() => {
-        expect(instance.setWindowWidth).toHaveBeenCalledTimes(1)
-      })
+      expect(instance.setWindowWidth).toHaveBeenCalledTimes(1)
     })
 
   })
@@ -116,10 +114,10 @@ describe('setWindowWidth()', () => {
   describe('directly invoking setWindowWidth()', () => {
 
     it('should set state.windowWidth with value of window.innerWidth', () => {
-      // resize browser window
       global.innerWidth = 800
-      global.dispatchEvent(new Event('resize'))
 
+      instance.setWindowWidth()
+      
       expect(component.state('windowWidth')).toBe(800)
     })
 
@@ -127,131 +125,17 @@ describe('setWindowWidth()', () => {
 
 })
 
-describe('renderForDesktop()', () => {
+// describe('componentDidMount()', () => {
 
-  let component
-  let instance
-  beforeEach(() => {
-    component = setUp()
-    instance = component.instance()
-    // spy on the function and force a render
-    jest.spyOn(instance, 'renderForDesktop')
-    component.update()
-  })
+//   describe('directly invoking componentDidMount()', () => {
 
-  describe('spying on renderForDesktop()', () => {
+//     it('should attach the "resize" event listener to the window', () => {
 
-    it('should be called on render', () => {
-      setTimeout(() => {
-        expect(instance.renderForDesktop).toHaveBeenCalled()
-      })
-    })
+//     })
 
-  })
+//   })
 
-  describe('directly invoking renderForDesktop()', () => {
-
-    describe('renderForDesktop() on desktop screens', () => {
-
-      it('should return 1 DesktopNav component', () => {
-        setTimeout(() => {
-          expect(instance.renderForDesktop).toHaveReturnedWith(DesktopNav)
-        })
-      })
-
-    })
-
-    describe('renderForDesktop() on mobile screens', () => {
-
-      it('should return null', () => {
-        // resize browser window
-        global.innerWidth = 800
-        global.dispatchEvent(new Event('resize'))
-        component.update()
-
-        setTimeout(() => {
-          expect(instance.renderForDesktop).toHaveReturnedWith(null)
-        })
-      })
-
-    })
-
-  })
-
-})
-
-describe('renderForMobile()', () => {
-
-  let component
-  let instance
-  beforeEach(() => {
-    component = setUp()
-    instance = component.instance()
-    // spy on the function and force a render
-    jest.spyOn(instance, 'renderForMobile')
-    component.update()
-  })
-
-  describe('spying on renderForMobile()', () => {
-
-    it('should be called on render', () => {
-      setTimeout(() => {
-        expect(instance.renderForMobile).toHaveBeenCalled()
-      })
-    })
-
-  })
-
-  describe('directly invoking renderForMobile()', () => {
-
-    describe('renderForMobile() on desktop screens', () => {
-
-      it('should return null', () => {
-        setTimeout(() => {
-          expect(instance.renderForMobile).toHaveReturnedWith(null)
-        })
-      })
-
-    })
-
-    describe('renderForMobile() on mobile screens', () => {
-
-      it('should return with 1 MobileNav component', () => {
-        // resize browser window
-        global.innerWidth = 800
-        global.dispatchEvent(new Event('resize'))
-        component.update()
-
-        setTimeout(() => {
-          expect(instance.renderForMobile).toHaveReturnedWith(MobileNav)
-        })
-      })
-
-    })
-
-  })
-
-})
-
-describe('componentDidMount()', () => {
-
-  describe('directly invoking componentDidMount()', () => {
-
-    let component
-    beforeEach(() => {
-      component = setUp()
-      component.update()
-    })
-
-    it('should attach the "resize" event listener to the window', () => {
-      setTimeout(() => {
-        expect(global).toHaveProperty('resize')
-      })
-    })
-
-  })
-
-})
+// })
 
 describe('Header mounting and unmounting', () => {
 
