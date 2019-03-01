@@ -27,6 +27,9 @@ class MiniNav extends Component {
 
   toggleMenu = (top = false) => {
     if (top) {
+      // if user is at the top of
+      // browser window always
+      // set menuOpen to false
       this.setState({
         menuOpen: false
       })
@@ -52,7 +55,15 @@ class MiniNav extends Component {
     } = this.state
 
     if (windowWidth < 993) {
-      return null
+      if (scrollPosition) {
+        return (
+          <div data-test="up-btn" className="mini-nav-btn to-top">
+            <a data-test="arrow-up" href="#top" className="arrow-up">^</a>
+          </div>
+        )
+      } else {
+        return null
+      }
     } else {
       if (scrollPosition) {
         return (

@@ -70,22 +70,22 @@ describe('MiniNav rendering', () => {
 
     describe('on desktop screens', () => {
 
+      const findMenuBtn = component =>
+        findByTestAttr(component, 'menu-btn')
+
+      const mouseEnterSim = component => {
+        const menuBtn = findMenuBtn(component)
+        menuBtn.simulate('mouseEnter')
+      }
+
+      beforeEach(() => {
+        // make mini-nav button render
+        global.innerWidth = 1400
+        global.dispatchEvent(new Event('resize'))
+        component.setState({ scrollPosition: 50 })
+      })
+
       describe('cursor enters the menu button div', () => {
-
-        beforeEach(() => {
-          // make mini-nav button render
-          global.innerWidth = 1400
-          global.dispatchEvent(new Event('resize'))
-          component.setState({ scrollPosition: 50 })
-        })
-
-        const makeBtn = component => 
-          findByTestAttr(component, 'menu-btn')
-
-        const mouseEnterSim = component => {
-          const button = makeBtn(component)
-          button.simulate('mouseEnter')
-        }
 
         it('should render 1 mini-nav menu', () => {
           mouseEnterSim(component)
@@ -112,29 +112,126 @@ describe('MiniNav rendering', () => {
 
       describe('user clicks a menu item', () => {
 
-        it('should unmount', () => {
+        it('should render null', () => {
+          mouseEnterSim(component)
 
+          let wrapper = findByTestAttr(component, 'link')
+          const numOfLinks = wrapper.length
+          let miniNavMenu
+
+          for(let i = 0; i < numOfLinks; i++) {
+            wrapper.at(i).simulate('click')
+
+            miniNavMenu = findByTestAttr(component, 'menu')
+            expect(miniNavMenu.length).toBe(0)
+
+            mouseEnterSim(component)
+            wrapper = findByTestAttr(component, 'link')
+          }
         })
 
       })
 
       describe('cursor leaves the menu button div', () => {
 
-        it('should unmount', () => {
+        it('should return null', () => {
+          mouseEnterSim(component)
 
+          let wrapper = findByTestAttr(component, 'menu')
+          wrapper.simulate('mouseLeave')
+
+          wrapper = findByTestAttr(component, 'menu')
+          expect(wrapper.length).toBe(0)
         })
 
       })
 
     })
 
-    // describe('on mobile screens', () => {
+    describe('on mobile screens', () => {
 
-    //   it('should not render', () => {
+      let wrapper
 
-    //   })
+      beforeEach(() => {
+        global.innerWidth = 600
+        global.dispatchEvent(new Event('resize'))
+        component.setState({ scrollPosition: 50 })
 
-    // })
+        wrapper = findByTestAttr(component, 'menu')
+      })
+
+      it('should not render', () => {
+        expect(wrapper.length).toBe(0)
+      })
+
+    })
+
+  })
+
+  describe('mobile to-top-button', () => {
+
+    describe('on mobile screens', () => {
+
+      beforeEach(() => {
+        global.innerWidth = 400
+        global.dispatchEvent(new Event('resize'))
+      })
+
+      describe('scroll position at top of window', () => {
+
+        it('should not render', () => {
+          component.setState({ scrollPosition: 0 })
+
+          const btn = findByTestAttr(component, 'up-btn')
+          expect(btn.length).toBe(0)
+
+          const arrow = findByTestAttr(component, 'arrow-up')
+          expect(arrow.length).toBe(0)
+        })
+
+      })
+
+      describe('scoll position not at top of window', () => {
+
+        it('should render 1 up-button div', () => {
+          component.setState({ scrollPosition: 300 })
+          const wrapper = findByTestAttr(component, 'up-btn')
+          expect(wrapper.length).toBe(1)
+        })
+
+        it('should render 1 arrow-up a', () => {
+          component.setState({ scrollPosition: 300 })
+          const wrapper = findByTestAttr(component, 'arrow-up')
+          expect(wrapper.length).toBe(1)
+        })
+
+      })
+
+    })
+
+    describe('on desktop screens', () => {
+
+      it('should not render regardless of scroll position', () => {
+        let btn
+        let arrow
+        global.innerWidth = 1100
+        global.dispatchEvent(new Event('resize'))
+        component.setState({ scrollPosition: 200 })
+
+        btn = findByTestAttr(component, 'up-btn')
+        arrow = findByTestAttr(component, 'arrow-up')
+        expect(btn.length).toBe(0)
+        expect(arrow.length).toBe(0)
+
+        component.setState({ scrollPosition: 0 })
+
+        btn = findByTestAttr(component, 'up-btn')
+        arrow = findByTestAttr(component, 'arrow-up')
+        expect(btn.length).toBe(0)
+        expect(arrow.length).toBe(0)
+      })
+
+    })
 
   })
 
