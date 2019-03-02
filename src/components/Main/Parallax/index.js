@@ -1,8 +1,8 @@
 import React from 'react'
 import './styles.scss'
 
-import { ibm360 } from '../../../assets/images/IBM360_91.jpg'
-import { switchboard } from '../../../assets/images/switchboard.jpg'
+import ibm360 from '../../../assets/images/IBM360_91.jpg'
+import switchboard from '../../../assets/images/switchboard.jpg'
 
 const Parallax = ({ position }) => {
 
@@ -30,7 +30,7 @@ const Parallax = ({ position }) => {
           src={src}
           alt={alt}
           className="responsive-img"
-          />
+        />
       </div>
     </div>
   )
