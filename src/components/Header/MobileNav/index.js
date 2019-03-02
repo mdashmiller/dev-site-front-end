@@ -32,9 +32,33 @@ class MobileNav extends Component {
           className={`mobile-menu ${toggle}`}
         >
           <ul>
-            <li><a data-test="about" href="#about">About</a></li>
-            <li><a data-test="portfolio" href="#portfolio">Portfolio</a></li>
-            <li><a data-test="contact" href="#contact">Contact</a></li>
+            <li>
+              <a
+                data-test="about"
+                href="#about"
+                onClick={() => this.handleClick()}
+              >
+                About
+              </a>
+            </li>
+            <li>
+              <a
+                data-test="portfolio"
+                href="#portfolio"
+                onClick={() => this.handleClick()}
+              >
+                Portfolio
+              </a>
+            </li>
+            <li>
+              <a
+                data-test="contact"
+                href="#contact"
+                onClick={() => this.handleClick()}
+              >
+                Contact
+              </a>
+            </li>
           </ul>
         </div>
       </div>

@@ -53,22 +53,32 @@ describe('MobileNav rendering', () => {
 
 describe('handleClick', () => {
   
-  let component, instance, wrapper
+  let component, instance
   beforeEach(() => {
     component = setUp()
     instance = component.instance()
-    wrapper = findByTestAttr(component, 'burger-btn')
+    jest.spyOn(instance, 'handleClick')
   })
 
   describe('spying on handleClick', () => {
 
     it('should be called when burger button is clicked', () => {
-      instance = component.instance()
-
-      jest.spyOn(instance, 'handleClick')
-      wrapper.simulate('click')
+      const burger = findByTestAttr(component, 'burger-btn')
+      burger.simulate('click')
 
       expect(instance.handleClick).toHaveBeenCalledTimes(1)
+    })
+
+    it('should be called when a link is clicked', () => {
+      const about = findByTestAttr(component, 'about')
+      const portfolio = findByTestAttr(component, 'portfolio')
+      const contact = findByTestAttr(component, 'contact')
+
+      about.simulate('click')
+      portfolio.simulate('click')
+      contact.simulate('click')
+
+      expect(instance.handleClick).toHaveBeenCalledTimes(3)
     })
 
   })
@@ -84,9 +94,12 @@ describe('handleClick', () => {
     })
 
     it('should add the class "visible" to the mobile-menu ul', () => {
+      let menu = findByTestAttr(component, 'menu')
+      expect(menu.hasClass('visible')).toBe(false)
+
       instance.handleClick()
-      const menu = findByTestAttr(component, 'menu')
       
+      menu = findByTestAttr(component, 'menu')
       expect(menu.hasClass('visible')).toBe(true)
     })
 
