@@ -25,7 +25,7 @@ class Header extends Component {
     const { windowWidth } = this.state
     
     return (
-      <header data-test="header" className="scrollspy">
+      <header data-test="header" id="top" className="scrollspy">
         <nav data-test="nav">
           <div data-test="nav-wrapper" className="nav-wrapper container">
             <a href="#top" data-test="brand-logo" className="brand-logo">
