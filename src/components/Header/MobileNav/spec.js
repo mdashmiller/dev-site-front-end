@@ -51,6 +51,39 @@ describe('MobileNav rendering', () => {
 
 })
 
+describe('conditional class "toggle"', () => {
+
+  let component
+  beforeEach(() => {
+    component = setUp()
+  })
+
+  describe('state.mobileNavOpen is true', () => {
+
+    it('should add className "visible" to menu div', () => {
+      component.setState({ mobileNavOpen: true })
+      const wrapper = findByTestAttr(component, 'menu')
+
+      expect(wrapper.hasClass('visible')).toBe(true)
+      expect(wrapper.hasClass('null')).toBe(false)
+    })
+
+  })
+
+  describe('state.mobileNavOpen is false', () => {
+
+    it('should add className "null" to menu div', () => {
+      component.setState({ mobileNavOpen: false })
+      const wrapper = findByTestAttr(component, 'menu')
+
+      expect(wrapper.hasClass('visible')).toBe(false)
+      expect(wrapper.hasClass('null')).toBe(true)
+    })
+
+  })
+
+})
+
 describe('handleClick', () => {
   
   let component, instance
@@ -106,6 +139,68 @@ describe('handleClick', () => {
   })
 
 })
+
+describe('handleOutsideClick()', () => {
+
+  let component, instance
+  beforeEach(() => {
+    component = setUp()
+    instance = component.instance()
+  })
+
+  // describe('spying on handleOutsideClick()', () => {
+
+  //   it('should be called when any part of document is clicked', () => {
+  //     jest.spyOn(instance, 'handleOutsideClick')
+
+  //   })
+
+  // })
+
+  describe('directly invoking handleOutsideClick()', () => {
+
+    describe('mobile-nav is not visible', () => {
+
+      it('should not change state.mobileNavOpen', () => {
+        component.setState({ mobileNavOpen: false })
+        instance.handleOutsideClick()
+        expect(component.state('mobileNavOpen')).toBe(false)
+      })
+
+    })
+
+    // describe('mobile-nav is visible', () => {
+
+    //   describe('user clicks the mobile-nav', () => {
+
+    //     it('should not change state.mobileNavOpen', () => {
+
+    //     })
+
+    //   })
+
+    //   describe('user clicks anything other than mobile-nav', () => {
+
+    //     it('should set state.mobileNavOpen to false', () => {
+          
+    //     })
+
+    //   })
+
+
+    // })
+
+  })
+
+})
+
+// describe('componentDidMount()', () => {
+
+//   it('should attach a "click" event listener to the document', () => {
+
+//   })
+
+// })
 
 describe('MobileNav mounting and unmounting', () => {
 
