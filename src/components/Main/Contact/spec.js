@@ -98,6 +98,117 @@ describe('Contact rendering', () => {
 
 })
 
+describe('handleChange()', () => {
+
+  const createEvent = field => {
+    return {
+      target: {
+        id: field,
+        value: 'a'
+      }
+    }
+  }
+
+  let component, instance
+  beforeEach(() => {
+    component = setUp()
+    instance = component.instance()
+    jest.spyOn(instance, 'handleChange')
+  })
+
+  describe('spying on handleChange()', () => {
+
+    it('should be called when user types in the email field', () => {
+      const event = createEvent('email')
+      const wrapper = findByTestAttr(component, 'email')
+      wrapper.simulate('change', event)
+
+      expect(instance.handleChange).toHaveBeenCalledTimes(1)
+      expect(instance.handleChange).toHaveBeenCalledWith(event)
+    })
+
+    it('should be called when user types in the message field', () => {
+      const event = createEvent('message')
+      const wrapper = findByTestAttr(component, 'message')
+      wrapper.simulate('change', event)
+
+      expect(instance.handleChange).toHaveBeenCalledTimes(1)
+      expect(instance.handleChange).toHaveBeenCalledWith(event)
+    })
+
+  })
+
+  describe('directly invoking handleChange()', () => {
+
+    describe('when called from the email field', () => {
+
+      it('should set the value of the email field in state', () => {
+        const event = createEvent('email')
+        instance.handleChange(event)
+
+        expect(component.state('email')).toBe('a')
+      })
+
+    })
+
+    describe('when called from the message field', () => {
+
+      it('should set the value of the message field in state', () => {
+        const event = createEvent('message')
+        instance.handleChange(event)
+
+        expect(component.state('message')).toBe('a')
+      })
+
+    })
+
+  })
+
+})
+
+describe('handleSubmit', () => {
+
+  const event = {
+    preventDefault: jest.fn()
+  }
+
+  let component, instance
+  beforeEach(() => {
+    component = setUp()
+    instance = component.instance()
+    jest.spyOn(instance, 'handleSubmit')
+  })
+
+  afterEach(() => {
+    jest.clearAllMocks()
+  })
+
+  describe('spying on handleSubmit()', () => {
+
+    it('should be called when user clicks submit', () => {
+      const wrapper = findByTestAttr(component, 'form')
+      wrapper.simulate('submit', event)
+
+      expect(instance.handleSubmit).toHaveBeenCalledTimes(1)
+      expect(instance.handleSubmit).toHaveBeenCalledWith(event)
+    })
+
+  })
+
+  describe('directly invoking handleSubmit()', () => {
+
+    it('should call e.preventDefault()', () => {
+      jest.spyOn(event, 'preventDefault')
+
+      instance.handleSubmit(event)
+
+      expect(event.preventDefault).toHaveBeenCalledTimes(1)
+    })
+
+  })
+
+})
+
 describe('Contact mounting and unmounting', () => {
 
   it('should render without error', () => {
