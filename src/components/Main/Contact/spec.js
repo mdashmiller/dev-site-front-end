@@ -293,36 +293,111 @@ describe('handleChange()', () => {
 
     describe('when called from the email field', () => {
 
-      it('should set the value of the email field in state', () => {
-        const event = createEvent('email')
-        instance.handleChange(event)
+      describe('user pastes into the field', () => {
 
-        expect(component.state('email')).toBe('abc')
+        describe('char limit is exceeded', () => {
+
+
+
+        })
+
+        describe('char limit is not exceeded', () => {
+
+
+
+        })
+
       })
 
-      it('should set the number of email chars in state', () => {
-        const event = createEvent('email')
-        instance.handleChange(event)
+      describe('user types in the field', () => {
 
-        expect(component.state('emailChars')).toBe(3)
+        describe('char limit is exceeded', () => {
+
+          it('should set the value of email field to the truncated email', () => {
+
+          })
+
+          it('should set the number of email chars to the max value', () => {
+
+          })
+
+          it('should freeze the email field', () => {
+            component.setState({ email: 'abc' })
+            
+          })
+
+          it('should set email error to true', () => {
+
+          })
+
+        })
+
+        describe('char limit is not exceeded', () => {
+
+          it('should set the value of the email field in state', () => {
+            const event = createEvent('email')
+            instance.handleChange(event)
+
+            expect(component.state('email')).toBe('abc')
+          })
+
+          it('should set the number of email chars in state', () => {
+            const event = createEvent('email')
+            instance.handleChange(event)
+
+            expect(component.state('emailChars')).toBe(3)
+          })
+
+        })
+
       })
 
     })
 
     describe('when called from the message field', () => {
 
-      it('should set the value of the message field in state', () => {
-        const event = createEvent('message')
-        instance.handleChange(event)
+      describe('user pastes into the field', () => {
 
-        expect(component.state('message')).toBe('abc')
+        describe('char limit is exceeded', () => {
+
+
+
+        })
+
+        describe('char limit is not exceeded', () => {
+
+
+
+        })
+
       })
 
-      it('should set the number of message chars in state', () => {
-        const event = createEvent('message')
-        instance.handleChange(event)
+      describe('user types in the field', () => {
 
-        expect(component.state('messageChars')).toBe(3)
+        describe('char limit is exceeded', () => {
+
+
+
+        })
+
+        describe('char limit is not exceeded', () => {
+
+          it('should set the value of the message field in state', () => {
+            const event = createEvent('message')
+            instance.handleChange(event)
+
+            expect(component.state('message')).toBe('abc')
+          })
+
+          it('should set the number of message chars in state', () => {
+            const event = createEvent('message')
+            instance.handleChange(event)
+
+            expect(component.state('messageChars')).toBe(3)
+          })
+
+        })
+
       })
 
     })
