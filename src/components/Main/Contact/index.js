@@ -1,21 +1,99 @@
 import React, { Component } from 'react'
 import './styles.scss'
 
+import notChars from '../../../../src/notChars'
+
 class Contact extends Component {
 
   state = {
     email: '',
-    message: ''
+    message: '',
+    emailChars: 0,
+    messageChars: 0,
+    freezeEmail: false,
+    freezeMessage: false,
+    emailError: false,
+    messageError: false
+  }
+
+  // component methods
+
+  handleKeyDown = e => {
+    const { freezeEmail, freezeMessage } = this.state
+    const field = e.target.id
+    const key = e.key
+
+    switch (field) {
+      case 'email':
+        if (freezeEmail && !notChars.list.includes(key)) {
+          this.setState({ emailError: true })
+        }
+        break
+      case 'message':
+        if (freezeMessage && !notChars.list.includes(key)) {
+          this.setState({ messageError: true })
+        }
+        break
+      default:
+        return
+    }
   }
 
   handleChange = e => {
+    const field = e.target.id
+    const chars = e.target.value.length
+    const fieldChars = `${field}Chars`
+    
     this.setState({
-      [e.target.id]: e.target.value
+      [field]: e.target.value,
+      [fieldChars]: chars
     })
+  }
+
+  trackChars = field => {
+    const { emailChars, messageChars } = this.state
+    
+    switch (field) {
+      case 'email':
+        if (emailChars >= 3) {
+          this.setState({ freezeEmail: true })
+        } else {
+          this.setState({ freezeEmail: false })
+        }
+        break
+      case 'message':
+        if (messageChars >= 3) {
+          this.setState({ freezeMessage: true })
+        } else {
+          this.setState({ freezeMessage: false })
+        }
+        break
+      default:
+        return
+    } 
   }
 
   handleSubmit = e => {
     e.preventDefault()
+  }
+
+  // lifecycle hooks
+
+  componentDidUpdate(prevProps, prevState) {
+    const {
+      emailChars,
+      messageChars
+    } = this.state
+
+    // if user has entered or deleted anything in the
+    // form call trackChars() and tell it which
+    // field has changed
+    if (emailChars !== prevState.emailChars) {
+      this.trackChars('email')
+    } else if (messageChars !== prevState.messageChars) {
+      this.trackChars('message')
+    }
+
   }
 
   render() {
@@ -55,6 +133,7 @@ class Contact extends Component {
                   type="email"
                   id="email"
                   value={email}
+                  onKeyDown={(e) => this.handleKeyDown(e)}
                   onChange={(e) => this.handleChange(e)}
                 />
                 <label data-test="label" htmlFor="email">Your Email</label>
@@ -68,6 +147,7 @@ class Contact extends Component {
                   className="materialize-textarea"
                   id="message"
                   value={message}
+                  onKeyDown={(e) => this.handleKeyDown(e)}
                   onChange={(e) => this.handleChange(e)}
                 >
                 </textarea>
