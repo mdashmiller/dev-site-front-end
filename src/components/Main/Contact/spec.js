@@ -251,11 +251,41 @@ describe('handleKeyDown()', () => {
 
 describe('handleChange()', () => {
 
-  const createEvent = field => {
+  // functions to create different test events
+  const typeUnderLimit = field => {
+    return {
+      key: 'c',
+      target: {
+        id: field,
+        value: 'abc'
+      }
+    }
+  }
+
+  const typeOverLimit = field => {
+    return {
+      key: 'd',
+      target: {
+        id: field,
+        value: 'abcd'
+      }
+    }
+  }
+
+  const pasteUnderLimit = field => {
     return {
       target: {
         id: field,
         value: 'abc'
+      }
+    }
+  }
+
+  const pasteOverLimit = field => {
+    return {
+      target: {
+        id: field,
+        value: 'abcd'
       }
     }
   }
@@ -270,7 +300,16 @@ describe('handleChange()', () => {
   describe('spying on handleChange()', () => {
 
     it('should be called when user types in the email field', () => {
-      const event = createEvent('email')
+      const event = typeUnderLimit('email')
+      const wrapper = findByTestAttr(component, 'email')
+      wrapper.simulate('change', event)
+
+      expect(instance.handleChange).toHaveBeenCalledTimes(1)
+      expect(instance.handleChange).toHaveBeenCalledWith(event)
+    })
+
+    it('should be called when user pastes in the email field', () => {
+      const event = pasteUnderLimit('email')
       const wrapper = findByTestAttr(component, 'email')
       wrapper.simulate('change', event)
 
@@ -279,7 +318,16 @@ describe('handleChange()', () => {
     })
 
     it('should be called when user types in the message field', () => {
-      const event = createEvent('message')
+      const event = typeUnderLimit('message')
+      const wrapper = findByTestAttr(component, 'message')
+      wrapper.simulate('change', event)
+
+      expect(instance.handleChange).toHaveBeenCalledTimes(1)
+      expect(instance.handleChange).toHaveBeenCalledWith(event)
+    })
+
+    it('should be called when user pastes in the message field', () => {
+      const event = pasteUnderLimit('message')
       const wrapper = findByTestAttr(component, 'message')
       wrapper.simulate('change', event)
 
@@ -297,13 +345,51 @@ describe('handleChange()', () => {
 
         describe('char limit is exceeded', () => {
 
+          it('should set the value of email field to the truncated email', () => {
+            const event = pasteOverLimit('email')
+            instance.handleChange(event)
 
+            expect(component.state('email')).toBe('abc')
+          })
+
+          it('should set the number of email chars to the max value', () => {
+            const event = pasteOverLimit('email')
+            instance.handleChange(event)
+
+            expect(component.state('emailChars')).toBe(3)
+          })
+
+          it('should freeze the email field', () => {
+            const event = pasteOverLimit('email')
+            instance.handleChange(event)
+
+            expect(component.state('freezeEmail')).toBe(true)
+          })
+
+          it('should set email error to true', () => {
+            const event = pasteOverLimit('email')
+            instance.handleChange(event)
+
+            expect(component.state('emailError')).toBe(true)
+          })
 
         })
 
         describe('char limit is not exceeded', () => {
 
+          it('should set the value of the email field in state', () => {
+            const event = pasteUnderLimit('email')
+            instance.handleChange(event)
 
+            expect(component.state('email')).toBe('abc')
+          })
+
+          it('should set the number of email chars in state', () => {
+            const event = pasteUnderLimit('email')
+            instance.handleChange(event)
+
+            expect(component.state('emailChars')).toBe(3)
+          })
 
         })
 
@@ -314,20 +400,31 @@ describe('handleChange()', () => {
         describe('char limit is exceeded', () => {
 
           it('should set the value of email field to the truncated email', () => {
+            const event = typeOverLimit('email')
+            instance.handleChange(event)
 
+            expect(component.state('email')).toBe('abc')
           })
 
           it('should set the number of email chars to the max value', () => {
+            const event = typeOverLimit('email')
+            instance.handleChange(event)
 
+            expect(component.state('emailChars')).toBe(3)
           })
 
           it('should freeze the email field', () => {
-            component.setState({ email: 'abc' })
-            
+            const event = typeOverLimit('email')
+            instance.handleChange(event)
+
+            expect(component.state('freezeEmail')).toBe(true)
           })
 
           it('should set email error to true', () => {
+            const event = typeOverLimit('email')
+            instance.handleChange(event)
 
+            expect(component.state('emailError')).toBe(true)
           })
 
         })
@@ -335,14 +432,14 @@ describe('handleChange()', () => {
         describe('char limit is not exceeded', () => {
 
           it('should set the value of the email field in state', () => {
-            const event = createEvent('email')
+            const event = typeUnderLimit('email')
             instance.handleChange(event)
 
             expect(component.state('email')).toBe('abc')
           })
 
           it('should set the number of email chars in state', () => {
-            const event = createEvent('email')
+            const event = typeUnderLimit('email')
             instance.handleChange(event)
 
             expect(component.state('emailChars')).toBe(3)
@@ -360,13 +457,51 @@ describe('handleChange()', () => {
 
         describe('char limit is exceeded', () => {
 
+          it('should set the value of message field to the truncated message', () => {
+            const event = pasteOverLimit('message')
+            instance.handleChange(event)
 
+            expect(component.state('message')).toBe('abc')
+          })
+
+          it('should set the number of message chars to the max value', () => {
+            const event = pasteOverLimit('message')
+            instance.handleChange(event)
+
+            expect(component.state('messageChars')).toBe(3)
+          })
+
+          it('should freeze the message field', () => {
+            const event = pasteOverLimit('message')
+            instance.handleChange(event)
+
+            expect(component.state('freezeMessage')).toBe(true)
+          })
+
+          it('should set email message to true', () => {
+            const event = pasteOverLimit('message')
+            instance.handleChange(event)
+
+            expect(component.state('messageError')).toBe(true)
+          })
 
         })
 
         describe('char limit is not exceeded', () => {
 
+          it('should set the value of the message field in state', () => {
+            const event = pasteUnderLimit('message')
+            instance.handleChange(event)
 
+            expect(component.state('message')).toBe('abc')
+          })
+
+          it('should set the number of message chars in state', () => {
+            const event = pasteUnderLimit('message')
+            instance.handleChange(event)
+
+            expect(component.state('messageChars')).toBe(3)
+          })
 
         })
 
@@ -376,21 +511,47 @@ describe('handleChange()', () => {
 
         describe('char limit is exceeded', () => {
 
+          it('should set the value of message field to the truncated message', () => {
+            const event = typeOverLimit('message')
+            instance.handleChange(event)
 
+            expect(component.state('message')).toBe('abc')
+          })
+
+          it('should set the number of message chars to the max value', () => {
+            const event = typeOverLimit('message')
+            instance.handleChange(event)
+
+            expect(component.state('messageChars')).toBe(3)
+          })
+
+          it('should freeze the message field', () => {
+            const event = typeOverLimit('message')
+            instance.handleChange(event)
+
+            expect(component.state('freezeMessage')).toBe(true)
+          })
+
+          it('should set message error to true', () => {
+            const event = typeOverLimit('message')
+            instance.handleChange(event)
+
+            expect(component.state('messageError')).toBe(true)
+          })
 
         })
 
         describe('char limit is not exceeded', () => {
 
           it('should set the value of the message field in state', () => {
-            const event = createEvent('message')
+            const event = typeUnderLimit('message')
             instance.handleChange(event)
 
             expect(component.state('message')).toBe('abc')
           })
 
           it('should set the number of message chars in state', () => {
-            const event = createEvent('message')
+            const event = typeUnderLimit('message')
             instance.handleChange(event)
 
             expect(component.state('messageChars')).toBe(3)
