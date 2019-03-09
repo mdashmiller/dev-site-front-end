@@ -6,6 +6,7 @@ import notChars from '../../../../src/notChars'
 class Contact extends Component {
 
   state = {
+    key: '',
     email: '',
     message: '',
     emailChars: 0,
@@ -22,6 +23,8 @@ class Contact extends Component {
     const { freezeEmail, freezeMessage } = this.state
     const field = e.target.id
     const key = e.key
+
+    this.setState({ key })
 
     switch (field) {
       case 'email':
@@ -40,14 +43,62 @@ class Contact extends Component {
   }
 
   handleChange = e => {
+    const { key, freezeEmail, freezeMessage } = this.state
     const field = e.target.id
     const chars = e.target.value.length
-    const fieldChars = `${field}Chars`
     
-    this.setState({
-      [field]: e.target.value,
-      [fieldChars]: chars
-    })
+    switch (field) {
+      case 'email':
+        if (chars > 3) {
+          // if char limit has been reached and user types another
+          // char or if user attempts to paste in something that
+          // exceeds the char limit only accept the under-the-limit
+          // chars, freeze the field and set the char
+          // count and error message appropriately
+          const email = e.target.value
+          const truncatedEmail = email.substring(0, 3)
+
+          this.setState({
+            email: truncatedEmail,
+            emailChars: 3,
+            freezeEmail: true,
+            emailError: true
+          })
+        } else {
+          // if char limit has not been met or the user pushes
+				  // a key from the notChars list take the user's input
+          if (!freezeEmail || notChars.list.includes(key)) {
+            this.setState({
+              email: e.target.value,
+              emailChars: chars
+            })
+          }
+        }
+        break
+      case 'message':
+        // same as above but for the message field
+        if (chars > 3) {
+          const message = e.target.value
+          const truncatedMessage = message.substring(0, 3)
+
+          this.setState({
+            message: truncatedMessage,
+            messageChars: 3,
+            freezeMessage: true,
+            messageError: true
+          })
+        } else {
+          if (!freezeMessage || notChars.list.includes(key)) {
+            this.setState({
+              message: e.target.value,
+              messageChars: chars
+            })
+          }
+        }
+        break
+      default:
+        return
+    }
   }
 
   trackChars = field => {
