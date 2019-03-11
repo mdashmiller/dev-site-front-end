@@ -14,7 +14,10 @@ class Contact extends Component {
     freezeEmail: false,
     freezeMessage: false,
     emailError: false,
-    messageError: false
+    messageError: false,
+    formError: false,
+    submitClicked: false,
+    // sendError: null
   }
 
   // component methods
@@ -101,6 +104,19 @@ class Contact extends Component {
     }
   }
 
+  handleFocus = () => {
+    // clears any error messages when user
+    // focuses on a form field
+    this.setState({
+      formError: false,
+      freezeEmail: false,
+      freezeMessage: false,
+      emailError: false,
+      messageError: false,
+      // sendError: null
+    })
+  }
+
   trackChars = field => {
     const { emailChars, messageChars } = this.state
     
@@ -125,6 +141,15 @@ class Contact extends Component {
   }
 
   handleSubmit = e => {
+    const { email, message } = this.state
+
+    // check that user has filled both form fields
+    if (!email || !message) {
+      this.setState({ formError: true })
+    } else {
+      this.setState({ submitClicked: true })
+    }
+
     e.preventDefault()
   }
 
@@ -148,7 +173,12 @@ class Contact extends Component {
   }
 
   render() {
-    const { email, message } = this.state
+    const {
+      email,
+      message,
+      emailError,
+      messageError,
+      formError } = this.state
     
     return (
       <section
@@ -186,6 +216,7 @@ class Contact extends Component {
                   value={email}
                   onKeyDown={(e) => this.handleKeyDown(e)}
                   onChange={(e) => this.handleChange(e)}
+                  onFocus={() => this.handleFocus()}
                 />
                 <label data-test="label" htmlFor="email">Your Email</label>
               </div>
@@ -200,6 +231,7 @@ class Contact extends Component {
                   value={message}
                   onKeyDown={(e) => this.handleKeyDown(e)}
                   onChange={(e) => this.handleChange(e)}
+                  onFocus={() => this.handleFocus()}
                 >
                 </textarea>
                 <label data-test="label" htmlFor="message">Message</label>
@@ -208,6 +240,12 @@ class Contact extends Component {
                 <button data-test="submit" className="btn" id="submit">
                   Submit
                 </button>
+                {
+                  formError && 
+                    <p data-test="form-err" className="fail">
+                      Need more input! Please complete both fields.
+                    </p>
+                }
               </div>
             </form>
           </div>

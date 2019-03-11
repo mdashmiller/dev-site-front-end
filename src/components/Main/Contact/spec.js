@@ -84,17 +84,35 @@ describe('Contact rendering', () => {
     expect(wrapper.length).toBe(1)
   })
 
-  // describe('redering upon submission', () =>  {
+  describe('redering upon submission', () =>  {
 
-  //   describe('submission error', () => {
+    describe('there is a form error', () => {
 
-  //   })
+      it('should render the form error p tag', () => {
+        component.setState({ formError: true })
+        const wrapper = findByTestAttr(component, 'form-err')
+        expect(wrapper.length).toBe(1)
+      })
 
-  //   describe('submission success', () => {
+    })
 
-  //   })
+    describe('user fills in both fields', () => {
 
-  // })
+      describe('nodemailer returns an error', () => {
+
+
+
+      })
+
+      describe('nodemailer returns success', () => {
+
+
+
+      })
+
+    })
+
+  })
 
 })
 
@@ -567,6 +585,56 @@ describe('handleChange()', () => {
 
 })
 
+describe('handleFocus()', () => {
+
+  let component, instance
+  beforeEach(() => {
+    component = setUp()
+    instance = component.instance()
+  })
+
+  describe('spying on handleFocus()', () => {
+
+    it('should be called when user focuses on a form field', () => {
+      jest.spyOn(instance, 'handleFocus')
+      const email = findByTestAttr(component, 'email')
+      const message = findByTestAttr(component, 'message')
+
+      email.simulate('focus')
+      message.simulate('focus')
+
+      expect(instance.handleFocus).toHaveBeenCalledTimes(2)
+    })
+
+  })
+
+  describe('directly invoking handleFocus()', () => {
+
+    it('should clear all errors in state', () => {
+      component.setState({
+        formError: true,
+        freezeEmail: true,
+        freezeMessage: true,
+        emailError: true,
+        messageError: true,
+      // sendError: {message: 'Errrrrrorrrr!!!'}
+      })
+
+      instance.handleFocus()
+
+      expect(component.state('formError')).toBe(false)
+      expect(component.state('freezeEmail')).toBe(false)
+      expect(component.state('freezeMessage')).toBe(false)
+      expect(component.state('emailError')).toBe(false)
+      expect(component.state('messageError')).toBe(false)
+      expect(component.state('messageError')).toBe(false)
+      // expect(component.state('sendError')).toBe(null)
+    })
+
+  })
+
+})
+
 describe('trackChars()', () => {
 
   const createEvent = field => {
@@ -692,6 +760,47 @@ describe('handleSubmit()', () => {
       instance.handleSubmit(event)
 
       expect(event.preventDefault).toHaveBeenCalledTimes(1)
+    })
+
+    describe('user leaves a form field blank', () => {
+
+      it('should set state.formError to true', () =>  {
+        component.setState({
+          email: '',
+          message: 'Hi-dilly ho!'
+        })
+        instance.handleSubmit(event)
+
+        expect(component.state('formError')).toBe(true)
+
+        component.setState({
+          email: 'ned@flanders.com',
+          message: '',
+          formError: false
+        })
+        instance.handleSubmit(event)
+
+        expect(component.state('formError')).toBe(true)
+      })
+
+    })
+
+    describe('user fills in both fields', () => {
+
+      it('should call nodemailer', () => {
+
+      })
+
+      it('should set state.submitClicked to true', () => {
+        component.setState({
+          email: 'patti@dmv.com',
+          message: 'Come over and watch vacation slides with Jubjub and me.'
+        })
+        instance.handleSubmit(event)
+
+        expect(component.state('submitClicked')).toBe(true)
+      })
+
     })
 
   })
