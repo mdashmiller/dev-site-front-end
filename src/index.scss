@@ -20,46 +20,6 @@ a:focus {
   outline-width: 5px;
 }
 
-noscript {
-  
-  .container {
-    border-top: 3px solid $light-grey;
-    border-bottom: 3px solid $light-grey;
-    
-    h6 {
-      color: $lighter-pink;
-      margin: 2rem;
-    }
-  }
-
-  &.intro-msg {
-
-    .container {
-      margin: 3rem auto;
-    }
-  }
-
-  &.missing-img {
-
-    .container {
-      height: 100%;
-
-      h6 {
-        margin: 3.5vh 0 2rem;
-      }
-    }
-  }
-
-  p {
-
-    &#no-js {
-      color: $lighter-pink;
-      font-size: 1rem;
-      margin-bottom: 1.5rem;
-    }
-  }
-}
-
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
